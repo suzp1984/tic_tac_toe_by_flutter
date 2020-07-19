@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tictactoe/Game.dart';
 import 'package:tictactoe/GameBoard.dart';
+import 'package:tictactoe/GameState.dart';
 import 'package:tictactoe/Square.dart';
+
+import 'GameBloc.dart';
 
 void main() {
   runApp(MyApp());
@@ -31,13 +35,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +69,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 Spacer(),
                 Container(
                   padding: const EdgeInsets.only(top: 20.0),
-                  child: Game(),
+                  child: BlocProvider(
+                      create: (context) =>
+                          GameBloc(GameInitializedState(isNextPlayerX: true)),
+                      child: Game(),
+                  )
                 ),
                 Spacer()
               ],
